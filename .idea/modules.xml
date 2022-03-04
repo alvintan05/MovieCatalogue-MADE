@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MovieCatalogueMADE.iml" filepath="$PROJECT_DIR$/.idea/modules/MovieCatalogueMADE.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MovieCatalogueMADE.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MovieCatalogueMADE.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/MovieCatalogueMADE.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/MovieCatalogueMADE.core.iml" />
     </modules>
   </component>
 </project>

@@ -6,6 +6,9 @@ plugins {
 }
 apply from: '../shared_dependencies.gradle'
 
+def API_KEY = '"' + apiKey + '"' ?: '"Api key not found"'
+def BASE_URL = '"' + baseUrl + '"' ?: '"Base URL not found"'
+
 android {
     compileSdkVersion 31
 
@@ -15,6 +18,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        each { type ->
+            type.buildConfigField "String", "BASE_URL", BASE_URL
+            type.buildConfigField "String", "TMDB_API_KEY", API_KEY
+        }
     }
 
     buildTypes {
@@ -23,13 +31,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding = true
     }

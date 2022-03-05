@@ -4,7 +4,7 @@ import android.util.Log
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiService
 import com.aldev.moviecataloguemade.core.data.source.remote.response.MovieResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.TvShowResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.TvResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -35,7 +35,7 @@ class RemoteDataSourceImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getListTvShow(): Flow<ApiResponse<List<TvShowResponse>>> {
+    override suspend fun getListTvShow(): Flow<ApiResponse<List<TvResponse>>> {
         return flow {
             try {
                 val response = apiService.getTvShows()

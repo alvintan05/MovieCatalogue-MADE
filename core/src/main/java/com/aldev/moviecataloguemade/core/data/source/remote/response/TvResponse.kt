@@ -2,7 +2,7 @@ package com.aldev.moviecataloguemade.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TvShowResponse(
+data class TvResponse(
     @field:SerializedName("id")
     val id: Int?,
 

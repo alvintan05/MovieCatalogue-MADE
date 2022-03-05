@@ -1,4 +1,4 @@
-package com.aldev.moviecataloguemade
+package com.aldev.moviecataloguemade.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -16,3 +16,5 @@ rootProject.name = "MovieCatalogueMADE"
 include ':app'
 include ':core'
 include ':favorite'
+include ':common'
+include ':tvshow'

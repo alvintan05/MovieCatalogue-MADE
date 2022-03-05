@@ -1,5 +1,6 @@
 package com.aldev.moviecataloguemade.core.data
 
+import com.aldev.moviecataloguemade.core.data.source.local.entity.FavoriteEntity
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSource
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
@@ -26,12 +27,32 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
             is ApiResponse.Empty -> {
-                emit(Resource.Error("Data are empty"))
+                emit(Resource.Error("Empty"))
             }
         }
     }
 
     override suspend fun getTvShowList(): Flow<Resource<List<Movie>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertMovie(favoriteEntity: FavoriteEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteMovie(id: Int, type: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getFavoriteList(type: String): Flow<List<FavoriteEntity>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getDetailFavorite(id: Int, type: String): Flow<FavoriteEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override fun checkIsFavorite(id: Int, type: String): Flow<Boolean> {
         TODO("Not yet implemented")
     }
 }

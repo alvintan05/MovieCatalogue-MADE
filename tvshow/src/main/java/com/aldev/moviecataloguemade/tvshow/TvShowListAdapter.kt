@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolder>() {
 
     private var listTvShow = ArrayList<Movie>()
+    var onItemClick: ((Movie) -> Unit)? = null
 
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return
@@ -46,6 +47,12 @@ class TvShowListAdapter : RecyclerView.Adapter<TvShowListAdapter.TvShowViewHolde
                 Glide.with(root)
                     .load(CommonConstant.posterUrlPath + item.posterPath)
                     .into(binding.imgItemPoster)
+            }
+        }
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(listTvShow[absoluteAdapterPosition])
             }
         }
     }

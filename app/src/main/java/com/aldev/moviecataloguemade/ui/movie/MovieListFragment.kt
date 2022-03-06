@@ -1,14 +1,18 @@
 package com.aldev.moviecataloguemade.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.aldev.moviecataloguemade.common.base.BaseFragment
+import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.databinding.FragmentMovieListBinding
+import com.aldev.moviecataloguemade.detail.DetailMovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +39,20 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
         binding?.rvMovies?.apply {
             setHasFixedSize(true)
             adapter = movieListAdapter
+        }
+
+        movieListAdapter.onItemClick = { movie ->
+            val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
+            intent.putExtras(
+                bundleOf().apply {
+                    putInt(CommonConstant.DetailIntentExtra.EXTRA_ID, movie.id)
+                    putString(
+                        CommonConstant.DetailIntentExtra.EXTRA_TYPE,
+                        CommonConstant.MovieType.MOVIE
+                    )
+                }
+            )
+            startActivity(intent)
         }
     }
 

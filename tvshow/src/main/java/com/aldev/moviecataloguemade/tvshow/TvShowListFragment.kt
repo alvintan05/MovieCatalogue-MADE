@@ -1,13 +1,17 @@
 package com.aldev.moviecataloguemade.tvshow
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.aldev.moviecataloguemade.common.base.BaseFragment
+import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.Resource
+import com.aldev.moviecataloguemade.detail.DetailMovieActivity
 import com.aldev.moviecataloguemade.tvshow.databinding.FragmentTvShowListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +39,20 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
         binding?.rvMovies?.apply {
             setHasFixedSize(true)
             adapter = tvShowListAdapter
+        }
+
+        tvShowListAdapter.onItemClick = { movie ->
+            val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
+            intent.putExtras(
+                bundleOf().apply {
+                    putInt(CommonConstant.DetailIntentExtra.EXTRA_ID, movie.id)
+                    putString(
+                        CommonConstant.DetailIntentExtra.EXTRA_TYPE,
+                        CommonConstant.MovieType.TV_SHOW
+                    )
+                }
+            )
+            startActivity(intent)
         }
     }
 

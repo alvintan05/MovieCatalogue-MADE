@@ -148,11 +148,10 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        style="?attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

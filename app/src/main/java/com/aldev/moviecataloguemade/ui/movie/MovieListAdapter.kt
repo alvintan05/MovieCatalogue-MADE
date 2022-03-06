@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
 
     private var listMovie = ArrayList<Movie>()
+    var onItemClick: ((Movie) -> Unit)? = null
 
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return
@@ -46,6 +47,12 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHold
                 Glide.with(root)
                     .load(CommonConstant.posterUrlPath + item.posterPath)
                     .into(binding.imgItemPoster)
+            }
+        }
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(listMovie[absoluteAdapterPosition])
             }
         }
     }

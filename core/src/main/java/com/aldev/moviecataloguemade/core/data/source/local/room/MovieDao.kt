@@ -16,13 +16,12 @@ interface MovieDao {
     @Query("DELETE FROM favorite WHERE movie_id = :id AND type = :type")
     suspend fun deleteMovie(id: Int, type: String)
 
-    @Query("SELECT * FROM favorite WHERE type = :type")
-    fun getFavoriteList(type: String): Flow<List<FavoriteEntity>>
+    @Query("SELECT * FROM favorite")
+    fun getFavoriteList(): Flow<List<FavoriteEntity>>
 
     @Query("SELECT * FROM favorite WHERE movie_id = :id AND type = :type")
     fun getDetailFavorite(id: Int, type: String): Flow<FavoriteEntity>
 
     @Query("SELECT EXISTS(SELECT * FROM favorite WHERE movie_id = :id AND type = :type)")
     fun checkIsFavorite(id: Int, type: String): Flow<Boolean>
-
 }

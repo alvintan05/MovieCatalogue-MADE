@@ -16,7 +16,7 @@ interface MovieRepository {
     suspend fun getDetailTvShow(tvId: Int): Flow<Resource<DetailMovie>>
     suspend fun insertMovie(detailMovie: DetailMovie)
     suspend fun deleteMovie(id: Int, type: String)
-    fun getFavoriteList(type: String): Flow<List<FavoriteEntity>>
-    fun getDetailFavorite(id: Int, type: String): Flow<FavoriteEntity>
+    fun getFavoriteList(): Flow<Resource<List<Movie>>>
+    fun getDetailFavorite(id: Int, type: String): Flow<Resource<DetailMovie>>
     fun checkIsFavorite(id: Int, type: String): Flow<Boolean>
 }

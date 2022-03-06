@@ -2,7 +2,7 @@ package com.aldev.moviecataloguemade.favorite.di
 
 import android.content.Context
 import com.aldev.moviecataloguemade.di.FavoriteModuleDependencies
-import com.aldev.moviecataloguemade.favorite.FavoriteListFragment
+import com.aldev.moviecataloguemade.favorite.ui.FavoriteListFragment
 import dagger.BindsInstance
 import dagger.Component
 

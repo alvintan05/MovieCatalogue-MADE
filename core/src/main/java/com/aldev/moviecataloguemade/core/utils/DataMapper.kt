@@ -18,7 +18,8 @@ object DataMapper {
                 title = it.title.orEmpty(),
                 voteAverage = it.voteAverage ?: 0.0,
                 overview = it.overview.orEmpty(),
-                posterPath = it.posterPath.orEmpty()
+                posterPath = it.posterPath.orEmpty(),
+                type = CommonConstant.MovieType.MOVIE
             )
             movieList.add(movie)
         }
@@ -33,7 +34,8 @@ object DataMapper {
                 title = it.title.orEmpty(),
                 voteAverage = it.voteAverage ?: 0.0,
                 overview = it.overview.orEmpty(),
-                posterPath = it.posterPath.orEmpty()
+                posterPath = it.posterPath.orEmpty(),
+                type = CommonConstant.MovieType.TV_SHOW
             )
             movieList.add(movie)
         }
@@ -70,7 +72,36 @@ object DataMapper {
         type = CommonConstant.MovieType.TV_SHOW
     )
 
-    fun mapDomainToEntity(input: DetailMovie) = FavoriteEntity(
+    fun mapListEntityToDomain(input: List<FavoriteEntity>): List<Movie> {
+        val movieList = ArrayList<Movie>()
+        input.map {
+            val movie = Movie(
+                id = it.movieId,
+                title = it.title,
+                voteAverage = it.rating,
+                overview = it.overview,
+                posterPath = it.posterPath,
+                type = it.type
+            )
+            movieList.add(movie)
+        }
+        return movieList
+    }
+
+    fun mapDetailEntityToDomain(input: FavoriteEntity) = DetailMovie(
+        movieId = input.movieId,
+        title = input.title,
+        releaseDate = input.releaseDate,
+        runtime = input.runtime,
+        rating = input.rating,
+        genres = input.genres,
+        overview = input.overview,
+        posterPath = input.posterPath,
+        backdropPath = input.backdropPath,
+        type = input.type
+    )
+
+    fun mapDetailDomainToEntity(input: DetailMovie) = FavoriteEntity(
         movieId = input.movieId,
         title = input.title,
         releaseDate = input.releaseDate,

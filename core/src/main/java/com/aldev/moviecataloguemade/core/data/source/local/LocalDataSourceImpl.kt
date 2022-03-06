@@ -16,10 +16,10 @@ class LocalDataSourceImpl @Inject constructor(
         movieDao.deleteMovie(id, type)
     }
 
-    override fun getFavoriteList(type: String): Flow<List<FavoriteEntity>> =
-        movieDao.getFavoriteList(type)
+    override fun getFavoriteList(): Flow<List<FavoriteEntity>> =
+        movieDao.getFavoriteList()
 
-    override fun getDetailFavorite(id: Int, type: String): Flow<FavoriteEntity> =
+    override fun getDetailFavorite(id: Int, type: String): Flow<FavoriteEntity?> =
         movieDao.getDetailFavorite(id, type)
 
     override fun checkIsFavorite(id: Int, type: String): Flow<Boolean> =

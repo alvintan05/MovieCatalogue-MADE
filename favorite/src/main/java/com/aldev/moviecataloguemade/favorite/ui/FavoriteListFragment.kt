@@ -1,4 +1,4 @@
-package com.aldev.moviecataloguemade.ui.movie
+package com.aldev.moviecataloguemade.favorite.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,20 +11,37 @@ import androidx.fragment.app.viewModels
 import com.aldev.moviecataloguemade.common.base.BaseFragment
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.Resource
-import com.aldev.moviecataloguemade.databinding.FragmentMovieListBinding
 import com.aldev.moviecataloguemade.detail.DetailMovieActivity
+import com.aldev.moviecataloguemade.di.FavoriteModuleDependencies
+import com.aldev.moviecataloguemade.favorite.databinding.FragmentFavoriteListBinding
+import com.aldev.moviecataloguemade.favorite.di.DaggerFavoriteComponent
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 
 @AndroidEntryPoint
-class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
+class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
 
-    private val viewModel: MovieListViewModel by viewModels()
-    private val movieListAdapter = MovieListAdapter()
+    private val viewModel: FavoriteListViewModel by viewModels()
+    private val favoriteListAdapter = FavoriteListAdapter()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentMovieListBinding = FragmentMovieListBinding.inflate(inflater, container, false)
+    ): FragmentFavoriteListBinding = FragmentFavoriteListBinding.inflate(inflater, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerFavoriteComponent.builder()
+            .context(requireContext())
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    requireContext(),
+                    FavoriteModuleDependencies::class.java
+                )
+            )
+            .build()
+            .inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,23 +53,23 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
     }
 
     private fun setupRecyclerView() {
-        binding?.rvMovies?.apply {
+        binding?.rvFavorite?.apply {
             setHasFixedSize(true)
-            adapter = movieListAdapter
+            adapter = favoriteListAdapter
         }
 
-        movieListAdapter.onItemClick = { movie ->
+        favoriteListAdapter.onItemClick = { movie ->
             val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
             intent.putExtras(
                 bundleOf().apply {
                     putInt(CommonConstant.DetailIntentExtra.EXTRA_ID, movie.id)
                     putString(
                         CommonConstant.DetailIntentExtra.EXTRA_TYPE,
-                        CommonConstant.MovieType.MOVIE
+                        movie.type
                     )
                     putString(
                         CommonConstant.DetailIntentExtra.EXTRA_SOURCE,
-                        CommonConstant.DataSource.REMOTE
+                        CommonConstant.DataSource.LOCAL
                     )
                 }
             )
@@ -61,22 +78,22 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
     }
 
     private fun observeLiveData() {
-        viewModel.movieListLiveData.observe(viewLifecycleOwner) {
+        viewModel.favoriteListLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     binding?.progressBar?.visibility = View.VISIBLE
-                    binding?.rvMovies?.visibility = View.GONE
+                    binding?.rvFavorite?.visibility = View.GONE
                     Log.d("TAG", "loading")
                 }
                 is Resource.Success -> {
                     binding?.progressBar?.visibility = View.GONE
-                    binding?.rvMovies?.visibility = View.VISIBLE
-                    movieListAdapter.setData(it.data)
+                    binding?.rvFavorite?.visibility = View.VISIBLE
+                    favoriteListAdapter.setData(it.data)
                     Log.d("TAG", "success")
                 }
                 is Resource.Error -> {
                     binding?.progressBar?.visibility = View.GONE
-                    binding?.rvMovies?.visibility = View.GONE
+                    binding?.rvFavorite?.visibility = View.GONE
                     Log.d("TAG", it.message ?: "error")
                 }
             }

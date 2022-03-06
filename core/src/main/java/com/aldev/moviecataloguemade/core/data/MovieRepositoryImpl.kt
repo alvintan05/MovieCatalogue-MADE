@@ -1,11 +1,8 @@
 package com.aldev.moviecataloguemade.core.data
 
 import com.aldev.moviecataloguemade.core.data.source.local.LocalDataSourceImpl
-import com.aldev.moviecataloguemade.core.data.source.local.entity.FavoriteEntity
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.DetailMovieResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.DetailTvResponse
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.repository.MovieRepository
@@ -13,6 +10,7 @@ import com.aldev.moviecataloguemade.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -76,23 +74,36 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertMovie(detailMovie: DetailMovie) {
-        val favoriteEntity = DataMapper.mapDomainToEntity(detailMovie)
+        val favoriteEntity = DataMapper.mapDetailDomainToEntity(detailMovie)
         localDataSource.insertMovie(favoriteEntity)
     }
 
     override suspend fun deleteMovie(id: Int, type: String) {
-        TODO("Not yet implemented")
+        localDataSource.deleteMovie(id, type)
     }
 
-    override fun getFavoriteList(type: String): Flow<List<FavoriteEntity>> {
-        TODO("Not yet implemented")
+    override fun getFavoriteList(): Flow<Resource<List<Movie>>> = flow {
+        emit(Resource.Loading())
+        val response = localDataSource.getFavoriteList()
+        if (response.first().isNotEmpty()) {
+            response.map {
+                emit(Resource.Success(DataMapper.mapListEntityToDomain(it)))
+            }
+        } else {
+            emit(Resource.Error("Empty Data"))
+        }
     }
 
-    override fun getDetailFavorite(id: Int, type: String): Flow<FavoriteEntity> {
-        TODO("Not yet implemented")
+    override fun getDetailFavorite(id: Int, type: String): Flow<Resource<DetailMovie>> = flow {
+        emit(Resource.Loading())
+        val response = localDataSource.getDetailFavorite(id, type).first()
+        if (response != null) {
+            emit(Resource.Success(DataMapper.mapDetailEntityToDomain(response)))
+        } else {
+            emit(Resource.Error("Empty Data"))
+        }
     }
 
-    override fun checkIsFavorite(id: Int, type: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
+    override fun checkIsFavorite(id: Int, type: String): Flow<Boolean> =
+        localDataSource.checkIsFavorite(id, type)
 }

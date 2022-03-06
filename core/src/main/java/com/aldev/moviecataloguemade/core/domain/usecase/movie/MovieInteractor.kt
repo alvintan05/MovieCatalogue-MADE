@@ -2,7 +2,6 @@ package com.aldev.moviecataloguemade.core.domain.usecase.movie
 
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.Resource
-import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,14 +21,6 @@ class MovieInteractor @Inject constructor(
         }
     }
 
-    override suspend fun getDetailData(id: Int, type: String): Flow<Resource<DetailMovie>> {
-        return when (type) {
-            CommonConstant.MovieType.MOVIE -> {
-                movieRepository.getDetailMovie(id)
-            }
-            else -> {
-                movieRepository.getDetailTvShow(id)
-            }
-        }
-    }
+    override fun getFavoriteList(): Flow<Resource<List<Movie>>> =
+        movieRepository.getFavoriteList()
 }

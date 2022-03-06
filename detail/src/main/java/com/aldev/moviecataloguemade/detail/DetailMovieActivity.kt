@@ -29,7 +29,9 @@ class DetailMovieActivity : BaseActivity<ActivityDetailMovieBinding>() {
         setupToolbar()
         viewModel.setIntentExtraData(intent.extras)
         viewModel.getDetailData()
+        viewModel.requestFavoriteStatus()
         observeLiveData()
+        setupFavClick()
     }
 
     private fun setupToolbar() {
@@ -64,6 +66,10 @@ class DetailMovieActivity : BaseActivity<ActivityDetailMovieBinding>() {
                 }
             }
         }
+
+        viewModel.favoriteStatus.observe(this) { status ->
+            binding.btnFav.isChecked = status
+        }
     }
 
     private fun setDetailMovieData(data: DetailMovie) {
@@ -91,6 +97,12 @@ class DetailMovieActivity : BaseActivity<ActivityDetailMovieBinding>() {
                         .error((com.aldev.moviecataloguemade.common.R.color.background_home))
                 )
                 .into(imgDetailBackdrop)
+        }
+    }
+
+    private fun setupFavClick() {
+        binding.btnFav.setOnClickListener {
+            viewModel.setFavorite(binding.btnFav.isChecked)
         }
     }
 

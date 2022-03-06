@@ -11,8 +11,19 @@ object CommonConstant {
     const val posterUrlPath = "${BuildConfig.IMAGE_BASE_URL}w342"
     const val backdropUrlPath = "${BuildConfig.IMAGE_BASE_URL}w780"
 
+    object DataSource{
+        const val REMOTE = "remote"
+        const val LOCAL = "local"
+    }
+
     object DetailIntentExtra{
         const val EXTRA_ID = "extra_id"
         const val EXTRA_TYPE = "extra_type"
+        const val EXTRA_SOURCE = "extra_source"
+    }
+
+    object MovieTypeDisplayValue{
+        const val MOVIE = "Movie"
+        const val TV_SHOW = "Tv Show"
     }
 }

@@ -50,6 +50,10 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
                         CommonConstant.DetailIntentExtra.EXTRA_TYPE,
                         CommonConstant.MovieType.TV_SHOW
                     )
+                    putString(
+                        CommonConstant.DetailIntentExtra.EXTRA_SOURCE,
+                        CommonConstant.DataSource.REMOTE
+                    )
                 }
             )
             startActivity(intent)

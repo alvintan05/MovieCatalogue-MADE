@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/favoriteListFragment"
-        android:name="com.aldev.moviecataloguemade.favorite.FavoriteListFragment"
+        android:name="com.aldev.moviecataloguemade.favorite.ui.FavoriteListFragment"
         android:label="Favorite"
         tools:layout="@layout/fragment_favorite_list" />
 </navigation>

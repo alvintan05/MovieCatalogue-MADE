@@ -3,22 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_navigation"
-    app:startDestination="@id/movieListFragment">
+    app:startDestination="@id/navigation_movie">
 
     <fragment
-        android:id="@+id/movieListFragment"
+        android:id="@+id/navigation_movie"
         android:name="com.aldev.moviecataloguemade.ui.movie.MovieListFragment"
-        android:label="fragment_movie_list"
+        android:label="@string/movies_label"
         tools:layout="@layout/fragment_movie_list" />
+
     <fragment
-        android:id="@+id/favoriteListFragment"
-        android:name="com.aldev.moviecataloguemade.favorite.ui.FavoriteListFragment"
-        app:moduleName="MovieCatalogueMADE.favorite"
-        android:label="fragment_favorite_list"
-        tools:layout="@layout/fragment_favorite_list" />
-    <fragment
-        android:id="@+id/tvShowListFragment"
+        android:id="@+id/navigation_tvshow"
         android:name="com.aldev.moviecataloguemade.tvshow.TvShowListFragment"
-        android:label="TvShowListFragment" />
+        android:label="@string/tvshows_label"
+        tools:layout="@layout/fragment_tv_show_list" />
+
+    <include-dynamic
+        android:id="@+id/favoriteGraph"
+        app:graphResName="favorite_nav"
+        app:moduleName="favorite" />
 
 </navigation>

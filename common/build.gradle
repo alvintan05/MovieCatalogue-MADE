@@ -6,6 +6,8 @@ plugins {
 }
 apply from: '../shared_dependencies.gradle'
 
+def IMAGE_BASE_URL = '"' + imageBaseURL + '"' ?: '"Image Base URL not found"'
+
 android {
     compileSdkVersion 31
 
@@ -15,6 +17,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "String", "IMAGE_BASE_URL", IMAGE_BASE_URL
     }
 
     buildTypes {

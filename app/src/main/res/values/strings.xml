@@ -4,6 +4,4 @@
     <string name="movies_label">Movies</string>
     <string name="tvshows_label">Tv Shows</string>
     <string name="favorite_label">Favorite</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

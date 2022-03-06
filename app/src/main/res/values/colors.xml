@@ -12,4 +12,5 @@
     <color name="circle_badge">#03045E</color>
     <color name="text_primary">#383C41</color>
     <color name="text_secondary">#979797</color>
+    <color name="background_home">#F4F4F4</color>
 </resources>

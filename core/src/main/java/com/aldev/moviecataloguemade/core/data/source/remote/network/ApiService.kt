@@ -1,10 +1,9 @@
 package com.aldev.moviecataloguemade.core.data.source.remote.network
 
 import com.aldev.moviecataloguemade.core.BuildConfig
-import com.aldev.moviecataloguemade.core.data.source.remote.response.ListResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.MovieResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.TvResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.*
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -17,4 +16,16 @@ interface ApiService {
     suspend fun getTvShows(
         @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY
     ): ListResponse<List<TvResponse>>
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY
+    ): DetailMovieResponse
+
+    @GET("tv/{tv_id}")
+    suspend fun getTvShowDetail(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY
+    ): DetailTvResponse
 }

@@ -37,5 +37,5 @@ data class FavoriteEntity(
     var backdropPath: String,
 
     @ColumnInfo(name = "type")
-    var type: String?
+    var type: String
 )

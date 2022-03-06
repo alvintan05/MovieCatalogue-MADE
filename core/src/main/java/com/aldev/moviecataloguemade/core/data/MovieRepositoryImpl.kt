@@ -1,9 +1,12 @@
 package com.aldev.moviecataloguemade.core.data
 
+import com.aldev.moviecataloguemade.core.data.source.local.LocalDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.local.entity.FavoriteEntity
-import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSource
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.DetailMovieResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.DetailTvResponse
+import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.repository.MovieRepository
 import com.aldev.moviecataloguemade.core.utils.DataMapper
@@ -15,29 +18,66 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieRepositoryImpl @Inject constructor(
-    private val remoteDataSourceImpl: RemoteDataSourceImpl
+    private val remoteDataSource: RemoteDataSourceImpl,
+    private val localDataSource: LocalDataSourceImpl
 ) : MovieRepository {
     override suspend fun getMovieList(): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading())
-        when (val response = remoteDataSourceImpl.getListMovie().first()) {
+        when (val response = remoteDataSource.getListMovie().first()) {
             is ApiResponse.Success -> {
-                emit(Resource.Success(DataMapper.mapResponsesToDomain(response.data)))
+                emit(Resource.Success(DataMapper.mapMovieResponsesToDomain(response.data)))
             }
             is ApiResponse.Error -> {
                 emit(Resource.Error(response.errorMessage))
             }
             is ApiResponse.Empty -> {
-                emit(Resource.Error("Empty"))
+                emit(Resource.Error("Empty Data From API"))
             }
         }
     }
 
-    override suspend fun getTvShowList(): Flow<Resource<List<Movie>>> {
-        TODO("Not yet implemented")
+    override suspend fun getTvShowList(): Flow<Resource<List<Movie>>> = flow {
+        emit(Resource.Loading())
+        when (val response = remoteDataSource.getListTvShow().first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(DataMapper.mapTvResponsesToDomain(response.data)))
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
+            }
+            is ApiResponse.Empty -> {
+                emit(Resource.Error("Empty Data From API"))
+            }
+        }
     }
 
-    override suspend fun insertMovie(favoriteEntity: FavoriteEntity) {
-        TODO("Not yet implemented")
+    override suspend fun getDetailMovie(movieId: Int): Flow<Resource<DetailMovie>> = flow {
+        emit(Resource.Loading())
+        when (val response = remoteDataSource.getDetailMovie(movieId).first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(DataMapper.mapDetailMovieResponsesToDomain(response.data)))
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
+            }
+        }
+    }
+
+    override suspend fun getDetailTvShow(tvId: Int): Flow<Resource<DetailMovie>> = flow {
+        emit(Resource.Loading())
+        when (val response = remoteDataSource.getDetailTvShow(tvId).first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(DataMapper.mapDetailTvResponsesToDomain(response.data)))
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
+            }
+        }
+    }
+
+    override suspend fun insertMovie(detailMovie: DetailMovie) {
+        val favoriteEntity = DataMapper.mapDomainToEntity(detailMovie)
+        localDataSource.insertMovie(favoriteEntity)
     }
 
     override suspend fun deleteMovie(id: Int, type: String) {

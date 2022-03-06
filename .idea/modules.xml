@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MovieCatalogueMADE.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MovieCatalogueMADE.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/MovieCatalogueMADE.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/MovieCatalogueMADE.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/MovieCatalogueMADE.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/MovieCatalogueMADE.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/detail/MovieCatalogueMADE.detail.iml" filepath="$PROJECT_DIR$/.idea/modules/detail/MovieCatalogueMADE.detail.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/favorite/MovieCatalogueMADE.favorite.iml" filepath="$PROJECT_DIR$/.idea/modules/favorite/MovieCatalogueMADE.favorite.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tvshow/MovieCatalogueMADE.tvshow.iml" filepath="$PROJECT_DIR$/.idea/modules/tvshow/MovieCatalogueMADE.tvshow.iml" />
     </modules>

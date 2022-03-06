@@ -86,9 +86,7 @@ class MovieRepositoryImpl @Inject constructor(
         emit(Resource.Loading())
         val response = localDataSource.getFavoriteList()
         if (response.first().isNotEmpty()) {
-            response.map {
-                emit(Resource.Success(DataMapper.mapListEntityToDomain(it)))
-            }
+            emit(Resource.Success(DataMapper.mapListEntityToDomain(response.first())))
         } else {
             emit(Resource.Error("Empty Data"))
         }

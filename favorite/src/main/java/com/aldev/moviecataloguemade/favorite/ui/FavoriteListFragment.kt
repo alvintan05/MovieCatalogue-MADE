@@ -1,5 +1,6 @@
 package com.aldev.moviecataloguemade.favorite.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +16,20 @@ import com.aldev.moviecataloguemade.detail.DetailMovieActivity
 import com.aldev.moviecataloguemade.di.FavoriteModuleDependencies
 import com.aldev.moviecataloguemade.favorite.databinding.FragmentFavoriteListBinding
 import com.aldev.moviecataloguemade.favorite.di.DaggerFavoriteComponent
-import dagger.hilt.android.AndroidEntryPoint
+import com.aldev.moviecataloguemade.favorite.utils.ViewModelFactory
 import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
 
-    private val viewModel: FavoriteListViewModel by viewModels()
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val viewModel: FavoriteListViewModel by viewModels {
+        factory
+    }
+
     private val favoriteListAdapter = FavoriteListAdapter()
 
     override fun inflateViewBinding(
@@ -29,18 +37,18 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
         container: ViewGroup?
     ): FragmentFavoriteListBinding = FragmentFavoriteListBinding.inflate(inflater, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         DaggerFavoriteComponent.builder()
-            .context(requireContext())
+            .context(requireActivity())
             .appDependencies(
                 EntryPointAccessors.fromApplication(
-                    requireContext(),
+                    requireActivity(),
                     FavoriteModuleDependencies::class.java
                 )
             )
             .build()
             .inject(this)
-        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

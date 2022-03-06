@@ -6,13 +6,14 @@ import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.usecase.detail.DetailInteractor
+import com.aldev.moviecataloguemade.core.domain.usecase.detail.DetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailMovieViewModel @Inject constructor(
-    private val detailInteractor: DetailInteractor
+    private val detailUseCase: DetailUseCase
 ) : ViewModel() {
 
     private var movieId = 0
@@ -31,10 +32,10 @@ class DetailMovieViewModel @Inject constructor(
     fun getDetailData() {
         if (movieId != 0 && movieType.isNotEmpty()) {
             viewModelScope.launch {
-                detailMovieLiveData = if (movieType == CommonConstant.DataSource.REMOTE) {
-                    detailInteractor.getDetailData(movieId, movieType).asLiveData()
+                detailMovieLiveData = if (sourceType == CommonConstant.DataSource.REMOTE) {
+                    detailUseCase.getDetailData(movieId, movieType).asLiveData()
                 } else {
-                    detailInteractor.getDetailFavorite(movieId, movieType).asLiveData()
+                    detailUseCase.getDetailFavorite(movieId, movieType).asLiveData()
                 }
             }
         }
@@ -43,7 +44,7 @@ class DetailMovieViewModel @Inject constructor(
     fun requestFavoriteStatus() {
         if (movieId != 0 && movieType.isNotEmpty()) {
             viewModelScope.launch {
-                favoriteStatus = detailInteractor.checkIsFavorite(movieId, movieType).asLiveData()
+                favoriteStatus = detailUseCase.checkIsFavorite(movieId, movieType).asLiveData()
             }
         }
     }
@@ -51,9 +52,9 @@ class DetailMovieViewModel @Inject constructor(
     fun setFavorite(status: Boolean) {
         viewModelScope.launch {
             if (status) {
-                detailMovieLiveData.value?.data?.let { detailInteractor.insertMovie(it) }
+                detailMovieLiveData.value?.data?.let { detailUseCase.insertMovie(it) }
             } else {
-                detailInteractor.deleteMovie(movieId, movieType)
+                detailUseCase.deleteMovie(movieId, movieType)
             }
         }
     }

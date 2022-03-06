@@ -7,6 +7,7 @@ import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.common.databinding.ItemMovieBinding
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
 
@@ -46,6 +47,7 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHold
 
                 Glide.with(root)
                     .load(CommonConstant.posterUrlPath + item.posterPath)
+                    .apply(RequestOptions())
                     .into(binding.imgItemPoster)
             }
         }

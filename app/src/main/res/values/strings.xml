@@ -3,5 +3,6 @@
     <string name="title_favorite">Module Title</string>
     <string name="movies_label">Movies</string>
     <string name="tvshows_label">Tv Shows</string>
+    <string name="search_label">Search</string>
     <string name="favorite_label">Favorite</string>
 </resources>

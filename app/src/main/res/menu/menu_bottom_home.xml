@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_tv_show_black"
         android:title="@string/tvshows_label" />
     <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search_black"
+        android:title="@string/search_label" />
+    <item
         android:id="@id/favoriteGraph"
         android:icon="@drawable/ic_favorite_black"
         android:title="@string/favorite_label" />

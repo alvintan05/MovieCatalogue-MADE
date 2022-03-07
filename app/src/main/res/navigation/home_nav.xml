@@ -17,6 +17,11 @@
         android:label="@string/tvshows_label"
         tools:layout="@layout/fragment_tv_show_list" />
 
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.aldev.moviecataloguemade.search.SearchFragment"
+        android:label="@string/search_label" />
+
     <include-dynamic
         android:id="@+id/favoriteGraph"
         app:graphResName="favorite_nav"

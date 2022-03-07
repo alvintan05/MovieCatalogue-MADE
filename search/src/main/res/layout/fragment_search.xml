@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchFragment">
+
+    <TextView
+        android:id="@+id/tv_type_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_search_type"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintBottom_toBottomOf="@id/radio_group_type"
+        app:layout_constraintStart_toStartOf="@id/search_view"
+        app:layout_constraintTop_toTopOf="@id/radio_group_type" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_type"
+        android:layout_width="@dimen/spacing_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_5"
+        android:layout_marginTop="@dimen/spacing_10"
+        android:checkedButton="@id/rb_movie"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/search_view"
+        app:layout_constraintStart_toEndOf="@id/tv_type_label"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rb_movie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie" />
+
+        <RadioButton
+            android:id="@+id/rb_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_10"
+            android:text="@string/tv" />
+
+    </RadioGroup>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_10"
+        android:layout_marginTop="@dimen/spacing_5"
+        android:background="@color/white"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:imeOptions="actionSearch"
+        app:queryBackground="@null"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_type"
+        app:queryHint="@string/search_hint" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search"
+        android:layout_width="@dimen/spacing_0"
+        android:layout_height="@dimen/spacing_0"
+        android:paddingTop="@dimen/spacing_5"
+        android:paddingBottom="@dimen/spacing_10"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        tools:listitem="@layout/item_movie" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

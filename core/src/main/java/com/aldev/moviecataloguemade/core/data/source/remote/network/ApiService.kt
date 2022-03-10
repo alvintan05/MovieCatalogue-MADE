@@ -28,4 +28,16 @@ interface ApiService {
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY
     ): DetailTvResponse
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
+        @Query("query") searchQuery: String
+    ): ListResponse<List<MovieResponse>>
+
+    @GET("search/tv")
+    suspend fun searchTvShow(
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
+        @Query("query") searchQuery: String
+    ): ListResponse<List<TvResponse>>
 }

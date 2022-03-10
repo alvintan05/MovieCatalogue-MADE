@@ -29,4 +29,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     abstract fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
+    abstract fun observeLiveData()
+
 }

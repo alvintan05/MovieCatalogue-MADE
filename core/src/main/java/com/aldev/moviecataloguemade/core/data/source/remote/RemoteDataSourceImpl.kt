@@ -79,4 +79,42 @@ class RemoteDataSourceImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    override suspend fun searchMovie(searchQuery: String): Flow<ApiResponse<List<MovieResponse>>> {
+        return flow {
+            try {
+                val response = apiService.searchMovie(searchQuery = searchQuery)
+                val dataArray = response.results
+                dataArray?.let {
+                    if (it.isNotEmpty()) {
+                        emit(ApiResponse.Success(response.results))
+                    } else {
+                        emit(ApiResponse.Empty)
+                    }
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun searchTvShow(searchQuery: String): Flow<ApiResponse<List<TvResponse>>> {
+        return flow {
+            try {
+                val response = apiService.searchTvShow(searchQuery = searchQuery)
+                val dataArray = response.results
+                dataArray?.let {
+                    if (it.isNotEmpty()) {
+                        emit(ApiResponse.Success(response.results))
+                    } else {
+                        emit(ApiResponse.Empty)
+                    }
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

@@ -3,6 +3,8 @@ package com.aldev.moviecataloguemade.core.data
 import com.aldev.moviecataloguemade.core.data.source.local.LocalDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.MovieResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.TvResponse
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.repository.MovieRepository
@@ -104,4 +106,34 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun checkIsFavorite(id: Int, type: String): Flow<Boolean> =
         localDataSource.checkIsFavorite(id, type)
+
+    override suspend fun searchMovie(searchQuery: String): Flow<Resource<List<Movie>>> = flow {
+        emit(Resource.Loading())
+        when (val response = remoteDataSource.searchMovie(searchQuery).first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(DataMapper.mapMovieResponsesToDomain(response.data)))
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
+            }
+            is ApiResponse.Empty -> {
+                emit(Resource.Error("Empty Data From API"))
+            }
+        }
+    }
+
+    override suspend fun searchTvShow(searchQuery: String): Flow<Resource<List<Movie>>> = flow {
+        emit(Resource.Loading())
+        when (val response = remoteDataSource.searchTvShow(searchQuery).first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(DataMapper.mapTvResponsesToDomain(response.data)))
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
+            }
+            is ApiResponse.Empty -> {
+                emit(Resource.Error("Empty Data From API"))
+            }
+        }
+    }
 }

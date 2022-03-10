@@ -85,7 +85,7 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
         }
     }
 
-    private fun observeLiveData() {
+    override fun observeLiveData() {
         viewModel.favoriteListLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {

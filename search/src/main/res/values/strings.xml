@@ -3,4 +3,5 @@
     <string name="movie">Movie</string>
     <string name="tv">Tv Show</string>
     <string name="search_hint">Type Title Here</string>
+    <string name="search">Search</string>
 </resources>

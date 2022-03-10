@@ -12,4 +12,6 @@ interface RemoteDataSource {
     suspend fun getListTvShow(): Flow<ApiResponse<List<TvResponse>>>
     suspend fun getDetailMovie(movieId: Int): Flow<ApiResponse<DetailMovieResponse>>
     suspend fun getDetailTvShow(tvId: Int): Flow<ApiResponse<DetailTvResponse>>
+    suspend fun searchMovie(searchQuery: String): Flow<ApiResponse<List<MovieResponse>>>
+    suspend fun searchTvShow(searchQuery: String): Flow<ApiResponse<List<TvResponse>>>
 }

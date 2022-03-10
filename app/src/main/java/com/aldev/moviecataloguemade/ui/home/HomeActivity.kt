@@ -26,7 +26,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private fun setupNavigation() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_movie, R.id.navigation_tvshow, R.id.favoriteGraph
+                R.id.navigation_movie,
+                R.id.navigation_tvshow,
+                R.id.navigation_search,
+                R.id.favoriteGraph
             )
         )
         val navView: BottomNavigationView = binding.bottomNavHome

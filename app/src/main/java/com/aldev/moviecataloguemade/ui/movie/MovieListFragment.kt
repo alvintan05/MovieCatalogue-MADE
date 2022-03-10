@@ -60,7 +60,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
         }
     }
 
-    private fun observeLiveData() {
+    override fun observeLiveData() {
         viewModel.movieListLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {

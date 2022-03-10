@@ -60,7 +60,7 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
         }
     }
 
-    private fun observeLiveData() {
+    override fun observeLiveData() {
         viewModel.tvShowListLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {

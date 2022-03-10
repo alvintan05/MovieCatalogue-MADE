@@ -1,10 +1,8 @@
 package com.aldev.moviecataloguemade.core.domain.repository
 
 import com.aldev.moviecataloguemade.core.data.Resource
-import com.aldev.moviecataloguemade.core.data.source.local.entity.FavoriteEntity
-import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.DetailMovieResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.DetailTvResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.MovieResponse
+import com.aldev.moviecataloguemade.core.data.source.remote.response.TvResponse
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
@@ -19,4 +17,6 @@ interface MovieRepository {
     fun getFavoriteList(): Flow<Resource<List<Movie>>>
     fun getDetailFavorite(id: Int, type: String): Flow<Resource<DetailMovie>>
     fun checkIsFavorite(id: Int, type: String): Flow<Boolean>
+    suspend fun searchMovie(searchQuery: String): Flow<Resource<List<Movie>>>
+    suspend fun searchTvShow(searchQuery: String): Flow<Resource<List<Movie>>>
 }

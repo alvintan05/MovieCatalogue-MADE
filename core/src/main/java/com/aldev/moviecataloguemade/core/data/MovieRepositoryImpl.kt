@@ -4,8 +4,6 @@ import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.source.local.LocalDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.MovieResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.TvResponse
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.repository.MovieRepository

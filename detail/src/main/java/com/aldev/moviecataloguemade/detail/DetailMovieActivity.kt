@@ -1,9 +1,7 @@
 package com.aldev.moviecataloguemade.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.aldev.moviecataloguemade.common.base.BaseActivity

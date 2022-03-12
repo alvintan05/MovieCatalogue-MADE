@@ -1,8 +1,6 @@
 package com.aldev.moviecataloguemade.core.domain.repository
 
 import com.aldev.moviecataloguemade.core.data.Resource
-import com.aldev.moviecataloguemade.core.data.source.remote.response.MovieResponse
-import com.aldev.moviecataloguemade.core.data.source.remote.response.TvResponse
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import kotlinx.coroutines.flow.Flow

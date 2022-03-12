@@ -10,6 +10,7 @@ buildscript {
     ext.material_version = "1.5.0"
     ext.glide_version = "4.11.0"
     ext.ticketview_version = "1.0.7"
+    ext.swipe_refresh_version = "1.1.0"
 
     ext.junit_version = "4.13.2"
     ext.androidx_junit_version = "1.1.3"

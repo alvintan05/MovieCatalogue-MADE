@@ -2,4 +2,6 @@
     <string name="release_time">Release time: %s</string>
     <string name="length">Length of a film: %s min</string>
     <string name="synopsis_title">Synopsis</string>
+    <string name="add_favorite">Added to favorite</string>
+    <string name="remove_favorite">Removed from favorite</string>
 </resources>

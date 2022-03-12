@@ -111,6 +111,7 @@ object DataMapper {
         overview = input.overview,
         posterPath = input.posterPath,
         backdropPath = input.backdropPath,
-        type = input.type
+        type = input.type,
+        addedAt = System.currentTimeMillis()
     )
 }

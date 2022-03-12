@@ -2,7 +2,6 @@ package com.aldev.moviecataloguemade.ui.movie
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.aldev.moviecataloguemade.common.base.BaseFragment
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
+import com.aldev.moviecataloguemade.common.gone
+import com.aldev.moviecataloguemade.common.visible
 import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.databinding.FragmentMovieListBinding
 import com.aldev.moviecataloguemade.detail.DetailMovieActivity
@@ -31,6 +32,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
 
         if (activity != null) {
             setupRecyclerView()
+            setupSwipeRefresh()
             observeLiveData()
         }
     }
@@ -60,24 +62,40 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
         }
     }
 
+    private fun setupSwipeRefresh() {
+        binding?.swipeRefresh?.setColorSchemeResources(com.aldev.moviecataloguemade.common.R.color.blue_primary)
+        binding?.swipeRefresh?.setOnRefreshListener {
+            binding?.swipeRefresh?.isRefreshing = false
+            viewModel.requestMovieList()
+            binding?.progressBar?.visibility = View.VISIBLE
+        }
+    }
+
     override fun observeLiveData() {
         viewModel.movieListLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
-                    binding?.progressBar?.visibility = View.VISIBLE
-                    binding?.rvMovies?.visibility = View.GONE
-                    Log.d("TAG", "loading")
+                    binding?.progressBar?.visible()
+                    binding?.rvMovies?.gone()
                 }
                 is Resource.Success -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    binding?.rvMovies?.visibility = View.VISIBLE
+                    binding?.progressBar?.gone()
+                    binding?.tvError?.gone()
+                    binding?.rvMovies?.visible()
                     movieListAdapter.setData(it.data)
-                    Log.d("TAG", "success")
                 }
                 is Resource.Error -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    binding?.rvMovies?.visibility = View.GONE
-                    Log.d("TAG", it.message ?: "error")
+                    binding?.progressBar?.gone()
+                    binding?.rvMovies?.gone()
+                    binding?.tvError?.visible()
+
+                    if (it.message == CommonConstant.RESPONSE_EMPTY) {
+                        binding?.tvError?.text =
+                            getString(com.aldev.moviecataloguemade.common.R.string.not_found_label)
+                    } else {
+                        binding?.tvError?.text =
+                            getString(com.aldev.moviecataloguemade.common.R.string.error_label)
+                    }
                 }
             }
         }

@@ -8,6 +8,6 @@ import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.usecase.movie.MovieUseCase
 
 class FavoriteListViewModel(movieUseCase: MovieUseCase) : ViewModel() {
-    var favoriteListLiveData: LiveData<Resource<List<Movie>>> =
+    val favoriteListLiveData: LiveData<List<Movie>> =
         movieUseCase.getFavoriteList().asLiveData()
 }

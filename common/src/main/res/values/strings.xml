@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_label">Something Error\nPlease refresh this page</string>
+    <string name="not_found_label">Data not found\nPlease try another title</string>
+    <string name="empty_label">Favorite is Empty\nPlease add your favorite</string>
+</resources>

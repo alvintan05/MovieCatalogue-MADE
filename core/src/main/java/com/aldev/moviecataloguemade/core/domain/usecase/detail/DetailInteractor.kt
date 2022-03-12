@@ -10,7 +10,7 @@ import javax.inject.Inject
 class DetailInteractor @Inject constructor(
     private val movieRepository: MovieRepository
 ) : DetailUseCase {
-    override suspend fun getDetailData(id: Int, type: String): Flow<Resource<DetailMovie>> {
+    override fun getDetailData(id: Int, type: String): Flow<Resource<DetailMovie>> {
         return when (type) {
             CommonConstant.MovieType.MOVIE -> {
                 movieRepository.getDetailMovie(id)

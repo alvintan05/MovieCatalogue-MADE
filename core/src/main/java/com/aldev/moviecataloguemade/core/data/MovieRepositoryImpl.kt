@@ -1,5 +1,6 @@
 package com.aldev.moviecataloguemade.core.data
 
+import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.core.data.source.local.LocalDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.RemoteDataSourceImpl
 import com.aldev.moviecataloguemade.core.data.source.remote.network.ApiResponse
@@ -21,7 +22,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSourceImpl,
     private val localDataSource: LocalDataSourceImpl
 ) : MovieRepository {
-    override suspend fun getMovieList(): Flow<Resource<List<Movie>>> = flow {
+    override fun getMovieList(): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading())
         when (val response = remoteDataSource.getListMovie().first()) {
             is ApiResponse.Success -> {
@@ -31,12 +32,12 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
             is ApiResponse.Empty -> {
-                emit(Resource.Error("Empty Data From API"))
+                emit(Resource.Error(CommonConstant.RESPONSE_EMPTY))
             }
         }
     }
 
-    override suspend fun getTvShowList(): Flow<Resource<List<Movie>>> = flow {
+    override fun getTvShowList(): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading())
         when (val response = remoteDataSource.getListTvShow().first()) {
             is ApiResponse.Success -> {
@@ -46,12 +47,12 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
             is ApiResponse.Empty -> {
-                emit(Resource.Error("Empty Data From API"))
+                emit(Resource.Error(CommonConstant.RESPONSE_EMPTY))
             }
         }
     }
 
-    override suspend fun getDetailMovie(movieId: Int): Flow<Resource<DetailMovie>> = flow {
+    override fun getDetailMovie(movieId: Int): Flow<Resource<DetailMovie>> = flow {
         emit(Resource.Loading())
         when (val response = remoteDataSource.getDetailMovie(movieId).first()) {
             is ApiResponse.Success -> {
@@ -63,7 +64,7 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDetailTvShow(tvId: Int): Flow<Resource<DetailMovie>> = flow {
+    override fun getDetailTvShow(tvId: Int): Flow<Resource<DetailMovie>> = flow {
         emit(Resource.Loading())
         when (val response = remoteDataSource.getDetailTvShow(tvId).first()) {
             is ApiResponse.Success -> {
@@ -84,13 +85,9 @@ class MovieRepositoryImpl @Inject constructor(
         localDataSource.deleteMovie(id, type)
     }
 
-    override fun getFavoriteList(): Flow<Resource<List<Movie>>> = flow {
-        emit(Resource.Loading())
-        val response = localDataSource.getFavoriteList()
-        if (response.first().isNotEmpty()) {
-            emit(Resource.Success(DataMapper.mapListEntityToDomain(response.first())))
-        } else {
-            emit(Resource.Error("Empty Data"))
+    override fun getFavoriteList(): Flow<List<Movie>>{
+        return localDataSource.getFavoriteList().map {
+            DataMapper.mapListEntityToDomain(it)
         }
     }
 
@@ -107,7 +104,7 @@ class MovieRepositoryImpl @Inject constructor(
     override fun checkIsFavorite(id: Int, type: String): Flow<Boolean> =
         localDataSource.checkIsFavorite(id, type)
 
-    override suspend fun searchMovie(searchQuery: String): Flow<Resource<List<Movie>>> = flow {
+    override fun searchMovie(searchQuery: String): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading())
         when (val response = remoteDataSource.searchMovie(searchQuery).first()) {
             is ApiResponse.Success -> {
@@ -117,12 +114,12 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
             is ApiResponse.Empty -> {
-                emit(Resource.Error("Empty Data From API"))
+                emit(Resource.Error(CommonConstant.RESPONSE_EMPTY))
             }
         }
     }
 
-    override suspend fun searchTvShow(searchQuery: String): Flow<Resource<List<Movie>>> = flow {
+    override fun searchTvShow(searchQuery: String): Flow<Resource<List<Movie>>> = flow {
         emit(Resource.Loading())
         when (val response = remoteDataSource.searchTvShow(searchQuery).first()) {
             is ApiResponse.Success -> {
@@ -132,7 +129,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
             is ApiResponse.Empty -> {
-                emit(Resource.Error("Empty Data From API"))
+                emit(Resource.Error(CommonConstant.RESPONSE_EMPTY))
             }
         }
     }

@@ -1,19 +1,19 @@
 package com.aldev.moviecataloguemade.search
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.Toast
-import androidx.appcompat.widget.SearchView
+import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.aldev.moviecataloguemade.common.base.BaseFragment
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
+import com.aldev.moviecataloguemade.common.gone
+import com.aldev.moviecataloguemade.common.visible
 import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.detail.DetailMovieActivity
 import com.aldev.moviecataloguemade.search.databinding.FragmentSearchBinding
@@ -53,7 +53,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     putInt(CommonConstant.DetailIntentExtra.EXTRA_ID, movie.id)
                     putString(
                         CommonConstant.DetailIntentExtra.EXTRA_TYPE,
-                        viewModel.currentSearchType
+                        viewModel.getCurrentSearchType()
                     )
                     putString(
                         CommonConstant.DetailIntentExtra.EXTRA_SOURCE,
@@ -71,6 +71,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
 
         binding?.btnSearch?.setOnClickListener {
+            hideKeyboard()
             val query = binding?.edtSearch?.text.toString().trim()
             var searchType = ""
             val selectedId = binding?.radioGroupType?.checkedRadioButtonId
@@ -79,27 +80,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 searchType = getRadioButtonText(selectedId)
             }
             viewModel.requestSearchData(query, searchType)
-
-            viewModel.searchResultLiveData.observe(viewLifecycleOwner){
-                when (it) {
-                    is Resource.Loading -> {
-                        binding?.progressBar?.visibility = View.VISIBLE
-                        binding?.rvSearch?.visibility = View.GONE
-                        Log.d("TAG", "loading")
-                    }
-                    is Resource.Success -> {
-                        binding?.progressBar?.visibility = View.GONE
-                        binding?.rvSearch?.visibility = View.VISIBLE
-                        searchAdapter.setData(it.data)
-                        Log.d("TAG", "success")
-                    }
-                    is Resource.Error -> {
-                        binding?.progressBar?.visibility = View.GONE
-                        binding?.rvSearch?.visibility = View.GONE
-                        Log.d("TAG", it.message ?: "error")
-                    }
-                }
-            }
         }
     }
 
@@ -115,7 +95,40 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             binding?.btnSearch?.isEnabled = it
         }
 
+        viewModel.searchResultLiveData.observe(viewLifecycleOwner) { searchResult ->
+            when (searchResult) {
+                is Resource.Loading -> {
+                    binding?.progressBar?.visible()
+                    binding?.rvSearch?.gone()
+                }
+                is Resource.Success -> {
+                    binding?.progressBar?.gone()
+                    binding?.rvSearch?.visible()
 
+                    searchAdapter.setData(searchResult.data)
+                }
+                is Resource.Error -> {
+                    binding?.progressBar?.gone()
+                    binding?.rvSearch?.gone()
+                    binding?.tvError?.visible()
+
+                    if (searchResult.message == CommonConstant.RESPONSE_EMPTY) {
+                        binding?.tvError?.text =
+                            getString(com.aldev.moviecataloguemade.common.R.string.not_found_label)
+                    } else {
+                        binding?.tvError?.text =
+                            getString(com.aldev.moviecataloguemade.common.R.string.error_label)
+                    }
+
+                }
+            }
+        }
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding?.root?.applicationWindowToken, 0)
     }
 
 }

@@ -3,15 +3,14 @@ package com.aldev.moviecataloguemade.favorite.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.aldev.moviecataloguemade.common.base.BaseFragment
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
-import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.detail.DetailMovieActivity
 import com.aldev.moviecataloguemade.di.FavoriteModuleDependencies
 import com.aldev.moviecataloguemade.favorite.databinding.FragmentFavoriteListBinding
@@ -86,25 +85,9 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
     }
 
     override fun observeLiveData() {
-        viewModel.favoriteListLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Loading -> {
-                    binding?.progressBar?.visibility = View.VISIBLE
-                    binding?.rvFavorite?.visibility = View.GONE
-                    Log.d("TAG", "loading")
-                }
-                is Resource.Success -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    binding?.rvFavorite?.visibility = View.VISIBLE
-                    favoriteListAdapter.setData(it.data)
-                    Log.d("TAG", "success")
-                }
-                is Resource.Error -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    binding?.rvFavorite?.visibility = View.GONE
-                    Log.d("TAG", it.message ?: "error")
-                }
-            }
+        viewModel.favoriteListLiveData.observe(viewLifecycleOwner) { data ->
+            favoriteListAdapter.setData(data)
+            binding?.tvError?.isVisible = data.isEmpty()
         }
     }
 

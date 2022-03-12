@@ -21,4 +21,11 @@ object CommonConstant {
         const val EXTRA_TYPE = "extra_type"
         const val EXTRA_SOURCE = "extra_source"
     }
+
+    const val RESPONSE_EMPTY = "empty"
+
+    object MovieTypeTitleValue{
+        const val MOVIE = "Movie"
+        const val TV_SHOW = "Tv Show"
+    }
 }

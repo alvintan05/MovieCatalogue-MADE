@@ -76,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_10"
         android:background="@color/circle_badge"
+        android:enabled="false"
         android:text="@string/search"
         android:textColor="@color/white"
         app:cornerRadius="@dimen/spacing_5"
@@ -97,6 +98,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_search"
         tools:listitem="@layout/item_movie" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/font_16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_search" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

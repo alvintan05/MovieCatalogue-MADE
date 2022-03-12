@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.common.databinding.ItemMovieBinding
+import com.aldev.moviecataloguemade.common.visible
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -45,6 +46,9 @@ class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteVie
                 tvItemRating.text = item.voteAverage.toString()
                 tvItemDesc.text = item.overview
 
+                tvChipType.visible()
+                tvChipType.text = getItemTypeTitle(item.type)
+
                 Glide.with(root)
                     .load(CommonConstant.posterUrlPath + item.posterPath)
                     .apply(RequestOptions())
@@ -57,5 +61,12 @@ class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteVie
                 onItemClick?.invoke(listFavorite[absoluteAdapterPosition])
             }
         }
+    }
+
+    private fun getItemTypeTitle(inputType: String): String {
+        return if (inputType == CommonConstant.MovieType.MOVIE)
+            CommonConstant.MovieTypeTitleValue.MOVIE
+        else
+            CommonConstant.MovieTypeTitleValue.TV_SHOW
     }
 }

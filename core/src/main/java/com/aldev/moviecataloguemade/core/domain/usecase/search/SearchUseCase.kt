@@ -5,5 +5,5 @@ import com.aldev.moviecataloguemade.core.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface SearchUseCase {
-    suspend fun searchData(searchQuery: String, type: String): Flow<Resource<List<Movie>>>
+    fun searchData(searchQuery: String, type: String): Flow<Resource<List<Movie>>>
 }

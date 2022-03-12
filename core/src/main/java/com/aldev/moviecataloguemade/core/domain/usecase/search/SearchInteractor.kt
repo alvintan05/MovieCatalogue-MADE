@@ -10,7 +10,7 @@ import javax.inject.Inject
 class SearchInteractor @Inject constructor(
     private val movieRepository: MovieRepository
 ) : SearchUseCase {
-    override suspend fun searchData(
+    override fun searchData(
         searchQuery: String,
         type: String
     ): Flow<Resource<List<Movie>>> {

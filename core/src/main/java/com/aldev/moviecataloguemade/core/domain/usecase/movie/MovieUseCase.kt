@@ -7,6 +7,6 @@ import com.aldev.moviecataloguemade.core.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
-    suspend fun getListData(type: String): Flow<Resource<List<Movie>>>
-    fun getFavoriteList(): Flow<Resource<List<Movie>>>
+    fun getListData(type: String): Flow<Resource<List<Movie>>>
+    fun getFavoriteList(): Flow<List<Movie>>
 }

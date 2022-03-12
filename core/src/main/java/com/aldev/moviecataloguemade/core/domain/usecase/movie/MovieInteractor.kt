@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MovieInteractor @Inject constructor(
     private val movieRepository: MovieRepository
 ) : MovieUseCase {
-    override suspend fun getListData(type: String): Flow<Resource<List<Movie>>> {
+    override fun getListData(type: String): Flow<Resource<List<Movie>>> {
         return when (type) {
             CommonConstant.MovieType.MOVIE -> {
                 movieRepository.getMovieList()
@@ -21,6 +21,6 @@ class MovieInteractor @Inject constructor(
         }
     }
 
-    override fun getFavoriteList(): Flow<Resource<List<Movie>>> =
+    override fun getFavoriteList(): Flow<List<Movie>> =
         movieRepository.getFavoriteList()
 }

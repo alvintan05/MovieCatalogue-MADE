@@ -8,6 +8,9 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.aldev.moviecataloguemade.common.base.BaseActivity
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
+import com.aldev.moviecataloguemade.common.gone
+import com.aldev.moviecataloguemade.common.showShortToast
+import com.aldev.moviecataloguemade.common.visible
 import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.detail.databinding.ActivityDetailMovieBinding
@@ -49,20 +52,17 @@ class DetailMovieActivity : BaseActivity<ActivityDetailMovieBinding>() {
         viewModel.detailMovieLiveData.observe(this) {
             when (it) {
                 is Resource.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    Log.d("TAG", "loading")
+                    binding.progressBar.visible()
                 }
                 is Resource.Success -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.gone()
                     val detailData = it.data
                     if (detailData != null) {
                         setDetailMovieData(detailData)
                     }
-                    Log.d("TAG", "success")
                 }
                 is Resource.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Log.d("TAG", it.message ?: "error")
+                    binding.progressBar.gone()
                 }
             }
         }
@@ -102,7 +102,13 @@ class DetailMovieActivity : BaseActivity<ActivityDetailMovieBinding>() {
 
     private fun setupFavClick() {
         binding.btnFav.setOnClickListener {
-            viewModel.setFavorite(binding.btnFav.isChecked)
+            val checkedStatus = binding.btnFav.isChecked
+            viewModel.setFavorite(checkedStatus)
+
+            if (checkedStatus)
+                this.showShortToast(getString(R.string.add_favorite))
+            else
+                this.showShortToast(getString(R.string.remove_favorite))
         }
     }
 

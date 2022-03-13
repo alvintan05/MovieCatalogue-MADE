@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_15"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/poster_image"
         android:paddingStart="@dimen/spacing_5"
         app:layout_constraintBottom_toBottomOf="@id/ticket_view"
         app:layout_constraintEnd_toEndOf="@id/guideline"

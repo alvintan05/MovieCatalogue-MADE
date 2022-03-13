@@ -3,7 +3,9 @@ package com.aldev.moviecataloguemade.ui.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aldev.moviecataloguemade.R
@@ -32,9 +34,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 R.id.favoriteGraph
             )
         )
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
         val navView: BottomNavigationView = binding.bottomNavHome
-        val navController = findNavController(R.id.nav_fragment)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        val navController = navHostFragment.navController
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 }

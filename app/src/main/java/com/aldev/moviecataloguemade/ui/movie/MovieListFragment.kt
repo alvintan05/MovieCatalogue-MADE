@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
 
     private val viewModel: MovieListViewModel by viewModels()
-    private val movieListAdapter = MovieListAdapter()
+    private var movieListAdapter: MovieListAdapter? = null
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -38,12 +38,13 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
     }
 
     private fun setupRecyclerView() {
+        movieListAdapter = MovieListAdapter()
         binding?.rvMovies?.apply {
             setHasFixedSize(true)
             adapter = movieListAdapter
         }
 
-        movieListAdapter.onItemClick = { movie ->
+        movieListAdapter?.onItemClick = { movie ->
             val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
             intent.putExtras(
                 bundleOf().apply {
@@ -82,7 +83,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
                     binding?.progressBar?.gone()
                     binding?.tvError?.gone()
                     binding?.rvMovies?.visible()
-                    movieListAdapter.setData(it.data)
+                    movieListAdapter?.setData(it.data)
                 }
                 is Resource.Error -> {
                     binding?.progressBar?.gone()
@@ -99,6 +100,13 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.rvMovies?.adapter = null
+        binding?.swipeRefresh?.isEnabled = false
+        movieListAdapter = null
     }
 
 }

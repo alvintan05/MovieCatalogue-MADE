@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
-    private val searchAdapter = SearchAdapter()
+    private var searchAdapter: SearchAdapter? = null
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -41,12 +41,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun setupRecyclerView() {
+        searchAdapter = SearchAdapter()
         binding?.rvSearch?.apply {
             setHasFixedSize(true)
             adapter = searchAdapter
         }
 
-        searchAdapter.onItemClick = { movie ->
+        searchAdapter?.onItemClick = { movie ->
             val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
             intent.putExtras(
                 bundleOf().apply {
@@ -105,7 +106,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     binding?.progressBar?.gone()
                     binding?.rvSearch?.visible()
 
-                    searchAdapter.setData(searchResult.data)
+                    searchAdapter?.setData(searchResult.data)
                     binding?.rvSearch?.scrollToPosition(0)
                 }
                 is Resource.Error -> {
@@ -132,4 +133,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         imm.hideSoftInputFromWindow(binding?.root?.applicationWindowToken, 0)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.rvSearch?.adapter = null
+        searchAdapter = null
+    }
 }

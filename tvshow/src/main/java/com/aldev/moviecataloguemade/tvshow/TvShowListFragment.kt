@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
 
     private val viewModel: TvShowListViewModel by viewModels()
-    private val tvShowListAdapter = TvShowListAdapter()
+    private var tvShowListAdapter: TvShowListAdapter? = null
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -38,12 +38,13 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
     }
 
     private fun setupRecyclerView() {
+        tvShowListAdapter = TvShowListAdapter()
         binding?.rvMovies?.apply {
             setHasFixedSize(true)
             adapter = tvShowListAdapter
         }
 
-        tvShowListAdapter.onItemClick = { movie ->
+        tvShowListAdapter?.onItemClick = { movie ->
             val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
             intent.putExtras(
                 bundleOf().apply {
@@ -82,7 +83,7 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
                     binding?.progressBar?.gone()
                     binding?.tvError?.gone()
                     binding?.rvMovies?.visible()
-                    tvShowListAdapter.setData(it.data)
+                    tvShowListAdapter?.setData(it.data)
                 }
                 is Resource.Error -> {
                     binding?.progressBar?.gone()
@@ -101,4 +102,10 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.rvMovies?.adapter = null
+        binding?.swipeRefresh?.isEnabled = false
+        tvShowListAdapter = null
+    }
 }

@@ -29,7 +29,7 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
         factory
     }
 
-    private val favoriteListAdapter = FavoriteListAdapter()
+    private var favoriteListAdapter: FavoriteListAdapter? = null
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -60,12 +60,13 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
     }
 
     private fun setupRecyclerView() {
+        favoriteListAdapter = FavoriteListAdapter()
         binding?.rvFavorite?.apply {
             setHasFixedSize(true)
             adapter = favoriteListAdapter
         }
 
-        favoriteListAdapter.onItemClick = { movie ->
+        favoriteListAdapter?.onItemClick = { movie ->
             val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
             intent.putExtras(
                 bundleOf().apply {
@@ -86,9 +87,14 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
 
     override fun observeLiveData() {
         viewModel.favoriteListLiveData.observe(viewLifecycleOwner) { data ->
-            favoriteListAdapter.setData(data)
+            favoriteListAdapter?.setData(data)
             binding?.tvError?.isVisible = data.isEmpty()
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.rvFavorite?.adapter = null
+        favoriteListAdapter = null
+    }
 }

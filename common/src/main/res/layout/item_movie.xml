@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:ticketBorderColor="@color/text_secondary"
+        app:ticketBorderColor="@color/ticket_border"
         app:ticketBorderWidth="@dimen/spacing_1"
         app:ticketCornerRadius="@dimen/spacing_5"
         app:ticketCornerType="rounded"

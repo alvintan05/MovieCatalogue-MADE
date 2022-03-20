@@ -4,8 +4,16 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    //id 'com.squareup.leakcanary.deobfuscation'
 }
 apply from: '../shared_dependencies.gradle'
+
+//leakCanary {
+//    // LeakCanary needs to know which variants have obfuscation turned on
+//    filterObfuscatedVariants { variant ->
+//        variant.name == "debug"
+//    }
+//}
 
 android {
     compileSdk 31
@@ -48,4 +56,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //LeakCanary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
 }

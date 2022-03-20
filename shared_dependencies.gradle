@@ -26,7 +26,4 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-
-    //LeakCanary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
 }

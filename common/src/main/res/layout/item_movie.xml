@@ -17,6 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:ticketBorderColor="@color/text_secondary"
+        app:ticketBorderWidth="@dimen/spacing_1"
         app:ticketCornerRadius="@dimen/spacing_5"
         app:ticketCornerType="rounded"
         app:ticketDividerPadding="@dimen/spacing_0"
@@ -25,7 +27,7 @@
         app:ticketOrientation="vertical"
         app:ticketScallopPositionPercent="40"
         app:ticketScallopRadius="@dimen/spacing_7"
-        app:ticketShowBorder="false"
+        app:ticketShowBorder="true"
         app:ticketShowDivider="true" />
 
     <androidx.constraintlayout.widget.Guideline

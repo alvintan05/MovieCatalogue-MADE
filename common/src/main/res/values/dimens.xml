@@ -2,6 +2,7 @@
 <resources>
     <!--Spacing-->
     <dimen name="spacing_0">0dp</dimen>
+    <dimen name="spacing_1">1dp</dimen>
     <dimen name="spacing_5">5dp</dimen>
     <dimen name="spacing_7">7dp</dimen>
     <dimen name="spacing_10">10dp</dimen>

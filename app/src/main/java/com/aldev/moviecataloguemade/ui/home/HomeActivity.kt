@@ -2,11 +2,9 @@ package com.aldev.moviecataloguemade.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aldev.moviecataloguemade.R
 import com.aldev.moviecataloguemade.common.base.BaseActivity

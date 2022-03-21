@@ -58,7 +58,7 @@ class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteVie
 
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(listFavorite[absoluteAdapterPosition])
+                onItemClick?.invoke(listFavorite[adapterPosition])
             }
         }
     }

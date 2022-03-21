@@ -54,7 +54,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(listSearchResult[absoluteAdapterPosition])
+                onItemClick?.invoke(listSearchResult[adapterPosition])
             }
         }
     }

@@ -50,6 +50,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    lintOptions {
+        disable "Instantiatable"
+    }
     dynamicFeatures = [':favorite']
 }
 

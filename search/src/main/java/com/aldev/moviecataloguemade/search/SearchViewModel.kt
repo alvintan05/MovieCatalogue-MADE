@@ -1,6 +1,9 @@
 package com.aldev.moviecataloguemade.search
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.aldev.moviecataloguemade.core.domain.usecase.search.SearchUseCase

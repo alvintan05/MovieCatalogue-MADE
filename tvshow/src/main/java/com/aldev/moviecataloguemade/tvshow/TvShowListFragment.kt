@@ -83,7 +83,7 @@ class TvShowListFragment : BaseFragment<FragmentTvShowListBinding>() {
                     binding?.progressBar?.gone()
                     binding?.tvError?.gone()
                     binding?.rvMovies?.visible()
-                    tvShowListAdapter?.setData(it.data)
+                    tvShowListAdapter?.submitList(it.data)
                 }
                 is Resource.Error -> {
                     binding?.progressBar?.gone()

@@ -13,7 +13,6 @@ import com.aldev.moviecataloguemade.core.data.Resource
 import com.aldev.moviecataloguemade.core.domain.model.DetailMovie
 import com.aldev.moviecataloguemade.detail.databinding.ActivityDetailMovieBinding
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -87,7 +87,7 @@ class FavoriteListFragment : BaseFragment<FragmentFavoriteListBinding>() {
 
     override fun observeLiveData() {
         viewModel.favoriteListLiveData.observe(viewLifecycleOwner) { data ->
-            favoriteListAdapter?.setData(data)
+            favoriteListAdapter?.submitList(data)
             binding?.tvError?.isVisible = data.isEmpty()
         }
     }

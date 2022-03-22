@@ -2,6 +2,8 @@ package com.aldev.moviecataloguemade.favorite.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aldev.moviecataloguemade.common.constant.CommonConstant
 import com.aldev.moviecataloguemade.common.databinding.ItemMovieBinding
@@ -10,17 +12,10 @@ import com.aldev.moviecataloguemade.core.domain.model.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteViewHolder>() {
+class FavoriteListAdapter :
+    ListAdapter<Movie, FavoriteListAdapter.FavoriteViewHolder>(TaskDiffCallBack()) {
 
-    private var listFavorite = ArrayList<Movie>()
     var onItemClick: ((Movie) -> Unit)? = null
-
-    fun setData(newListData: List<Movie>?) {
-        if (newListData == null) return
-        listFavorite.clear()
-        listFavorite.addAll(newListData)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder =
         FavoriteViewHolder(
@@ -31,10 +26,8 @@ class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteVie
             )
         )
 
-    override fun getItemCount(): Int = listFavorite.size
-
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        val data = listFavorite[position]
+        val data = getItem(position)
         holder.bindItem(data)
     }
 
@@ -58,7 +51,7 @@ class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteVie
 
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(listFavorite[adapterPosition])
+                onItemClick?.invoke(getItem(adapterPosition))
             }
         }
     }
@@ -68,5 +61,16 @@ class FavoriteListAdapter : RecyclerView.Adapter<FavoriteListAdapter.FavoriteVie
             CommonConstant.MovieTypeTitleValue.MOVIE
         else
             CommonConstant.MovieTypeTitleValue.TV_SHOW
+    }
+
+    class TaskDiffCallBack : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
+
     }
 }

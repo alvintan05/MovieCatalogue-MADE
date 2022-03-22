@@ -106,7 +106,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     binding?.progressBar?.gone()
                     binding?.rvSearch?.visible()
 
-                    searchAdapter?.setData(searchResult.data)
+                    searchAdapter?.submitList(searchResult.data)
                     binding?.rvSearch?.scrollToPosition(0)
                 }
                 is Resource.Error -> {

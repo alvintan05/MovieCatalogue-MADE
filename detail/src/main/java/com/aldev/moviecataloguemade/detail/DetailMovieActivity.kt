@@ -82,18 +82,10 @@ class DetailMovieActivity : BaseActivity<ActivityDetailMovieBinding>() {
 
             Glide.with(this@DetailMovieActivity)
                 .load(CommonConstant.posterUrlPath + data.posterPath)
-                .apply(
-                    RequestOptions.placeholderOf(com.aldev.moviecataloguemade.common.R.color.background_home)
-                        .error(com.aldev.moviecataloguemade.common.R.color.background_home)
-                )
                 .into(imgDetailPoster)
 
             Glide.with(this@DetailMovieActivity)
                 .load(CommonConstant.backdropUrlPath + data.backdropPath)
-                .apply(
-                    RequestOptions.placeholderOf((com.aldev.moviecataloguemade.common.R.color.background_home))
-                        .error((com.aldev.moviecataloguemade.common.R.color.background_home))
-                )
                 .into(imgDetailBackdrop)
         }
     }
